@@ -9,6 +9,7 @@ import com.juicywx.bean.Message;
 import com.juicywx.bean.Reply;
 import com.juicywx.bean.TextReply;
 import com.juicywx.bean.WxFormat;
+import com.juicywx.business.BusinessProcess;
 
 public class MessageHandler {
 	protected Message mMessage;
@@ -33,14 +34,26 @@ public class MessageHandler {
 		else if(msg.getMsgType().equals("location")) handlerLocation();
 		else if(msg.getMsgType().equals("news")) handlerLink();
 		else if(msg.getMsgType().equals("video")) handlerVideo();
+		else if(msg.getMsgType().equals("event")) handlerEvent();
 	}
-	protected void handlerVideo() {
+	private void handlerVideo() {
 		// TODO Auto-generated method stub
 		
 	}
-	protected void handlerLink() {
+	private void handlerLink() {
 		// TODO Auto-generated method stub
 		
+	}
+	protected void handlerEvent() {
+		TextReply reply = new TextReply();
+		
+		reply.setFromUserName(mMessage.getToUserName());
+		reply.setToUserName(mMessage.getFromUserName());
+		reply.setCreateTime(new Date().getTime());
+		reply.setMsgType(Reply.TEXT);
+		BusinessProcess process = new BusinessProcess();
+		reply.setContent(process.getEventOrder(mMessage.getEvent()));
+		mReply=WxFormat.replyToXml(reply);
 	}
 	protected void handlerVoice() {
 		// TODO Auto-generated method stub
