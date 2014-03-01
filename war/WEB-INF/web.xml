@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	version="2.5">
+	<servlet>
+		<servlet-name>JuicywxPrototype</servlet-name>
+		<servlet-class>com.juicywx.JuicywxPrototypeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JuicywxPrototype</servlet-name>
+		<url-pattern>/juicywxprototype</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>guest</servlet-name>
+		<servlet-class>com.juicywx.Guest</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>wxImp</servlet-name>
+		<servlet-class>com.juicywx.WxImp</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>guest</servlet-name>
+		<url-pattern>/juicywx/guest</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>wxImp</servlet-name>
+		<url-pattern>/wxImp</url-pattern>
+	</servlet-mapping>
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+</web-app>
