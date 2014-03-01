@@ -52,7 +52,7 @@ public class MessageHandler {
 		reply.setCreateTime(new Date().getTime());
 		reply.setMsgType(Reply.TEXT);
 		BusinessProcess process = new BusinessProcess();
-		reply.setContent(process.getEventOrder(mMessage.getEvent()));
+		reply.setContent(process.getEventOrder(mMessage));
 		mReply=WxFormat.replyToXml(reply);
 	}
 	protected void handlerVoice() {
