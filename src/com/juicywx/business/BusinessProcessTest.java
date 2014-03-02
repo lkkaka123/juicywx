@@ -8,7 +8,7 @@ public class BusinessProcessTest {
 
 	
 	public void test() {
-		String url ="http://www.wutyouth.net";
+		
 		String result = null;
 		BusinessProcess process = new BusinessProcess();
 		result = process.getAccessToken(BusinessProcess.URL);
