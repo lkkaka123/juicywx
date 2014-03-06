@@ -4,21 +4,24 @@ import java.io.IOException;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
-
+import com.google.appengine.api.datastore.Entity;
 import com.juicywx.bean.Message;
 import com.juicywx.bean.Reply;
 import com.juicywx.bean.TextReply;
 import com.juicywx.bean.WxFormat;
 import com.juicywx.business.BusinessProcess;
+import com.juicywx.store.Sql;
 
 public class MessageHandler {
 	protected Message mMessage;
 	protected String mReply;
-	
+	private HttpServletRequest mRequest;
 	public MessageHandler(){
 		
 	}
 	public void dispath(HttpServletRequest req){
+		mRequest=req;
+		
 		Message msg=null;
 		try {
 			msg = WxFormat.prase(req.getInputStream());
@@ -28,6 +31,10 @@ public class MessageHandler {
 		}
 		if(msg == null) return;
 		mMessage=msg;
+		if(false == prevent(msg.getFromUserName())){
+			mReply = "请求过于频繁";
+			return;
+		}
 		if(msg.getMsgType().equals("text")) handlerText();
 		else if(msg.getMsgType().equals("image")) handlerImage();
 		else if(msg.getMsgType().equals("voice")) handlerVoice();
@@ -45,15 +52,8 @@ public class MessageHandler {
 		
 	}
 	protected void handlerEvent() {
-		TextReply reply = new TextReply();
-		
-		reply.setFromUserName(mMessage.getToUserName());
-		reply.setToUserName(mMessage.getFromUserName());
-		reply.setCreateTime(new Date().getTime());
-		reply.setMsgType(Reply.TEXT);
 		BusinessProcess process = new BusinessProcess();
-		reply.setContent(process.getEventOrder(mMessage));
-		mReply=WxFormat.replyToXml(reply);
+		mReply=process.getEventOrder(mMessage);
 	}
 	protected void handlerVoice() {
 		// TODO Auto-generated method stub
@@ -80,6 +80,25 @@ public class MessageHandler {
 	}
 	public String getmReply() {
 		return mReply;
+	}
+	/**
+	 * stop frequently request
+	 */
+	public static boolean prevent(String openID){
+		Entity entity=Sql.get("TIME",openID);
+		if(entity==null){
+			entity = new Entity("TIME",openID);
+			entity.setProperty("time", System.currentTimeMillis());
+			Sql.put(entity);
+			return true;
+		}else{
+			long lastTime = (long)entity.getProperty("time");
+			if(System.currentTimeMillis()-lastTime<5000){
+				return false;
+			}else{
+				return true;
+			}
+		}
 	}
 
 }

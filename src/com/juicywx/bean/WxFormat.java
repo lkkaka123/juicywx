@@ -77,6 +77,9 @@ public class WxFormat {
 		if(Reply.TEXT.equals(type)){
 			TextReply tp = (TextReply)reply;
 			str=xstream.toXML(tp);
+		}else if(Reply.NEWS.equals(type)){
+			NewsReply np = (NewsReply)reply;
+			str=xstream.toXML(np);
 		}
 		
 		return str;

@@ -1,6 +1,8 @@
 package com.juicywx.bean;
 
 
+import java.util.List;
+
 import com.thoughtworks.xstream.annotations.XStreamAlias;
 
 public class NewsReply extends Reply{
@@ -15,13 +17,18 @@ public class NewsReply extends Reply{
 	@XStreamAlias("ArticleCount")
 	private String articleCount ;
 	@XStreamAlias("Articles")
-	private String articles ;
-	@XStreamAlias("url")
-	private String Url ;
-	@XStreamAlias("PicUrl")
-	private String picUrl;
-	@XStreamAlias("Title")
-	private String title;
-	@XStreamAlias("Description")
-	private String description;
+	private List<Article> articles;
+	public String getArticleCount() {
+		return articleCount;
+	}
+	public void setArticleCount(String articleCount) {
+		this.articleCount = articleCount;
+	}
+	public List<Article> getArticles() {
+		return articles;
+	}
+	public void setArticles(List<Article> articles) {
+		this.articles = articles;
+	}
+	
 }

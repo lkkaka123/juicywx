@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.juicywx.auth.EncoderHandler;
+import com.juicywx.business.SessionService;
 
 
 public class WxImp extends HttpServlet {
@@ -50,7 +51,8 @@ public class WxImp extends HttpServlet {
 		resp.setContentType("text/plain");
 		req.setCharacterEncoding("UTF-8");  
 		resp.setCharacterEncoding("UTF-8");  
-
+//		SessionService.getInstance().setSession(req.getSession());
+		
 		MessageHandler handler = new MessageHandler();
 		handler.dispath(req);
 		String respStr = handler.getmReply();

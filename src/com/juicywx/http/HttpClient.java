@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpClient {
-	public static String httpGet(String url){
+	public static String httpGet (String url){
 		URL getUrl;
 		String lines = null;
 		try {

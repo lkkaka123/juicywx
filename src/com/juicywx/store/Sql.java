@@ -1,10 +1,11 @@
-package com.juicywx.data;
+package com.juicywx.store;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.KeyFactory;
+import com.google.appengine.api.datastore.Query;
 
 public class Sql {
 	
@@ -18,4 +19,9 @@ public class Sql {
 		}
 		return result;
 	}
+	public static void put(Entity entity){
+		DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+		datastore.put(entity);
+	}
+	
 }
